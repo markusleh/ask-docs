@@ -3,9 +3,6 @@
 import React from "react"
 import { EventStreamContentType } from "@fortaine/fetch-event-source"
 import { fetchEventSource } from "@microsoft/fetch-event-source"
-import { BellRing, Check } from "lucide-react"
-
-import { useAi } from "@/lib/useAi"
 import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
 import {
@@ -17,22 +14,6 @@ import {
   CardTitle,
 } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
-import { Separator } from "@/components/ui/separator"
-
-const notifications = [
-  {
-    title: "Your call has been confirmed.",
-    description: "1 hour ago",
-  },
-  {
-    title: "You have a new message!",
-    description: "1 hour ago",
-  },
-  {
-    title: "Your subscription is expiring soon!",
-    description: "2 hours ago",
-  },
-]
 
 type CardProps = React.ComponentProps<typeof Card>
 

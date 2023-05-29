@@ -1,9 +1,6 @@
-import { NextResponse } from "next/server"
-import { LLMChain, PromptTemplate } from "langchain"
 import { ConsoleCallbackHandler } from "langchain/callbacks"
-import { ChainValues, LLMResult } from "langchain/schema"
+import { ChainValues } from "langchain/schema"
 
-import { model } from "@/lib/ai-server"
 import { chain } from "@/lib/query"
 
 export const dynamic = "force-dynamic"
