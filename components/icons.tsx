@@ -1,9 +1,10 @@
 import {
+  FileSearch2,
   LucideProps,
   Moon,
   SunMedium,
   Twitter,
-  type Icon as LucideIcon, FileSearch2,
+  type Icon as LucideIcon,
 } from "lucide-react"
 
 export type Icon = LucideIcon

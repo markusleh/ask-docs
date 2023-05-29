@@ -1,6 +1,11 @@
 "use client"
+
+import React from "react"
+import { EventStreamContentType } from "@fortaine/fetch-event-source"
+import { fetchEventSource } from "@microsoft/fetch-event-source"
 import { BellRing, Check } from "lucide-react"
 
+import { useAi } from "@/lib/useAi"
 import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
 import {
@@ -11,12 +16,8 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card"
+import { Input } from "@/components/ui/input"
 import { Separator } from "@/components/ui/separator"
-import {Input} from "@/components/ui/input";
-import {useAi} from "@/lib/useAi";
-import {fetchEventSource} from "@microsoft/fetch-event-source";
-import React from "react";
-import {EventStreamContentType} from "@fortaine/fetch-event-source";
 
 const notifications = [
   {
@@ -40,7 +41,7 @@ interface ChatMessage {
   type: "user" | "bot"
 }
 
-export function CardDemo({ className, ...props }: CardProps) {
+function CardDemo({ className, ...props }: CardProps) {
   const [tokens, setTokens] = React.useState<string[] | []>([])
   const [conversation, setConversation] = React.useState<ChatMessage[] | []>([])
   const scrollRef = React.useRef<HTMLDivElement>(null)
@@ -49,27 +50,40 @@ export function CardDemo({ className, ...props }: CardProps) {
     setTokens((currentTokens) => [...currentTokens, token])
   }
   const makeQuery = (question: string) => {
-    if(tokens.length > 0) {
-      setConversation((currentConversation) => [...currentConversation, {type: "bot", text: tokens.join("")}])
+    if (tokens.length > 0) {
+      setConversation((currentConversation) => [
+        ...currentConversation,
+        { type: "bot", text: tokens.join("") },
+      ])
     }
     setTokens([])
-    setConversation((currentConversation) => [...currentConversation, {type: "user", text: question}])
+    setConversation((currentConversation) => [
+      ...currentConversation,
+      { type: "user", text: question },
+    ])
     scrollRef.current?.scrollIntoView({ behavior: "smooth" })
-    fetchEventSource('/api/', {
-      method: 'POST',
+    fetchEventSource("/api/", {
+      method: "POST",
       headers: {
-        'Content-Type': 'application/json'
+        "Content-Type": "application/json",
       },
-      body: JSON.stringify({query: question}),
+      body: JSON.stringify({ query: question }),
       async onopen(response) {
-        if (response.ok && response.headers.get('content-type') === EventStreamContentType) {
+        if (
+          response.ok &&
+          response.headers.get("content-type") === EventStreamContentType
+        ) {
           scrollRef.current?.scrollIntoView({ behavior: "smooth" })
-          return; // everything's good
-        } else if (response.status >= 400 && response.status < 500 && response.status !== 429) {
+          return // everything's good
+        } else if (
+          response.status >= 400 &&
+          response.status < 500 &&
+          response.status !== 429
+        ) {
           // client-side errors are usually non-retriable:
-          throw new Error('non-retriable client-side error');
+          throw new Error("non-retriable client-side error")
         } else {
-          throw new Error('server-side error');
+          throw new Error("server-side error")
         }
       },
       onmessage: (event) => updateTokens(event.data),
@@ -79,13 +93,16 @@ export function CardDemo({ className, ...props }: CardProps) {
     })
   }
   const onSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    const formData = new FormData(event.currentTarget);
-    const question = formData.get("question") as string;
+    event.preventDefault()
+    const formData = new FormData(event.currentTarget)
+    const question = formData.get("question") as string
     makeQuery(question)
-    event.currentTarget.reset();
+    event.currentTarget.reset()
   }
-  const currentConv: ChatMessage[] = (tokens.length > 0) ? [...conversation, {type: "bot", text: tokens.join("")}] : conversation
+  const currentConv: ChatMessage[] =
+    tokens.length > 0
+      ? [...conversation, { type: "bot", text: tokens.join("") }]
+      : conversation
   return (
     <Card className={cn("w-full", className)} {...props}>
       <CardHeader>
@@ -116,8 +133,14 @@ export function CardDemo({ className, ...props }: CardProps) {
       <CardFooter>
         <form onSubmit={onSubmit} className="w-full">
           <div className="flex items-center gap-2">
-            <Input placeholder="Ask something" name="question" className="min-w-32" />
-            <Button className="w-32" variant="default">Ask</Button>
+            <Input
+              placeholder="Ask something"
+              name="question"
+              className="min-w-32"
+            />
+            <Button className="w-32" variant="default">
+              Ask
+            </Button>
           </div>
         </form>
       </CardFooter>
