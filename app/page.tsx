@@ -67,7 +67,7 @@ function CardDemo({ className, ...props }: CardProps) {
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ query: question }),
+      body: JSON.stringify({ query: question, history: conversation.map(i => i.text) }),
       async onopen(response) {
         if (
           response.ok &&

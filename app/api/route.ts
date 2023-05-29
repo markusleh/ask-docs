@@ -9,8 +9,9 @@ import { chain } from "@/lib/query"
 export const dynamic = "force-dynamic"
 
 export async function POST(req: Request) {
-  const { query } = await req.json()
+  const { query, history } = await req.json()
   console.log("query", query)
+  console.log("history", history)
   let responseStream = new TransformStream()
   const writer = responseStream.writable.getWriter()
   const encoder = new TextEncoder()
@@ -19,8 +20,8 @@ export async function POST(req: Request) {
     .call(
       {
         question: query,
-        chat_history: [],
-        verbose: true,
+        chat_history: history,
+        // verbose: true,
       },
       [
         new ConsoleCallbackHandler(),
@@ -35,11 +36,6 @@ export async function POST(req: Request) {
             parentRunId?: string
           ): Promise<void> | void {
             console.log("chainEnd", runId, parentRunId)
-            try {
-              writer.close()
-            } catch (e) {
-              console.error("writer.close", e)
-            }
           },
         },
       ]
