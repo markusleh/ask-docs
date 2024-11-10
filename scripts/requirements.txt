@@ -1,0 +1,8 @@
+langchain
+python-frontmatter
+markdown
+beautifulsoup4
+unstructured
+supabase
+sentence-transformers
+langchain-community
