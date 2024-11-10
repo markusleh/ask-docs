@@ -1,9 +1,10 @@
-/** @type {import('next').NextConfig} */
+// @ts-check
+ 
+/**
+ * @type {import('next').NextConfig}
+ */
 const nextConfig = {
-  reactStrictMode: true,
-  experimental: {
-    appDir: true,
-  },
+  /* config options here */
 }
-
+ 
 export default nextConfig
