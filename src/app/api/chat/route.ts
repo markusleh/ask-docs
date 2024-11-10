@@ -1,3 +1,4 @@
+/* from https://github.com/langchain-ai/langchain-nextjs-template/blob/main/app/api/chat/retrieval/route.ts */
 import { NextRequest, NextResponse } from "next/server"
 import { HuggingFaceInferenceEmbeddings } from "@langchain/community/embeddings/hf"
 import { SupabaseVectorStore } from "@langchain/community/vectorstores/supabase"
