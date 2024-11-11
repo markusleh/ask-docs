@@ -157,7 +157,7 @@ export async function POST(req: NextRequest) {
       JSON.stringify(
         documents.map((doc) => {
           return {
-            pageContent: doc.pageContent.slice(0, 50) + "...",
+            pageContent: doc.pageContent.slice(0, 30) + "...",
             metadata: doc.metadata,
           }
         })
