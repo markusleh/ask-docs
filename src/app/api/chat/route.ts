@@ -157,7 +157,8 @@ export async function POST(req: NextRequest) {
       JSON.stringify(
         documents.map((doc) => {
           return {
-            pageContent: doc.pageContent.slice(0, 50) + "...",
+            // Removed due to vercel header limits
+            //pageContent: doc.pageContent.slice(0, 30) + "...",
             metadata: doc.metadata,
           }
         })
