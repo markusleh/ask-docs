@@ -33,7 +33,7 @@ const formatVercelMessages = (chatHistory: VercelChatMessage[]) => {
   return formattedDialogueTurns.join("\n")
 }
 
-const CONDENSE_QUESTION_TEMPLATE = `Given the following conversation and a follow up question, rephrase the follow up question to be a standalone question, in its original language.
+const CONDENSE_QUESTION_TEMPLATE = `Given the following conversation and a follow up question, rephrase the follow up question to be a standalone question, in english language.
 
 <chat_history>
   {chat_history}
@@ -45,7 +45,7 @@ const condenseQuestionPrompt = PromptTemplate.fromTemplate(
   CONDENSE_QUESTION_TEMPLATE
 )
 
-const ANSWER_TEMPLATE = `You are a security consultant helping customer to set up Microsoft security tools.
+const ANSWER_TEMPLATE = `You are a security consultant helping customer to set up Microsoft security tools. You only speak english.
 
 Answer the question based only on the following context and chat history:
 <context>
