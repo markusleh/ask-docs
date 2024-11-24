@@ -137,6 +137,7 @@ function ChatCard({ className, ...props }: CardProps) {
             <Input
               placeholder="Ask something"
               name="question"
+              autoComplete="off"
               className="min-w-32"
               onChange={handleInputChange}
             />
